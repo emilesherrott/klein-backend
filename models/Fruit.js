@@ -1,7 +1,7 @@
 const fruits = require("../fruits.json")
 
 class Fruit{
-    constructor (genus, name, id, family, order, nutritions) {
+    constructor ({genus, name, id, family, order, nutritions}) {
         this.genus = genus
         this.name = name
         this.id = id
@@ -17,7 +17,7 @@ class Fruit{
     static showOne = (name) => {
         const fruit = fruits.filter(fruit => fruit.name.toLowerCase() == name)
         if (fruit.length == 1){
-            return new Fruit(fruit)
+            return new Fruit(fruit[0])
         } else {
             throw Error("The fruit does not exist")
         }
@@ -29,6 +29,17 @@ class Fruit{
         fruits.push(newFruit)
         return new Fruit(newFruit)
 
+    }
+
+    update(data) {
+        const updatedFruit = fruits.find(fruit => fruit.name.toLowerCase() == this.name.toLowerCase())
+        console.log(updatedFruit)
+        if(updatedFruit) {
+            updatedFruit.name = data.name
+            return new Fruit(updatedFruit)
+        } else {
+            throw new Error("Fruit not found")
+        }
     }
 }
 
